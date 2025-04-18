@@ -4,7 +4,6 @@
  */
 
 /*
- * Copy this file as `lv_conf.h`
  * 1. simply next to the `lvgl` folder
  * 2. or any other places and
  *    - define `LV_CONF_INCLUDE_SIMPLE`
@@ -43,7 +42,7 @@ extern uint32_t custom_tick_get(void);
 
 /* Adjust color mix functions rounding. GPUs might calculate color mix (blending) differently.
  * 0: round down, 64: round up from x.75, 128: round up from half, 192: round up from x.25, 254: round up */
-#define LV_COLOR_MIX_ROUND_OFS (LV_COLOR_DEPTH == 32 ? 0: 128)
+#define LV_COLOR_MIX_ROUND_OFS (LV_COLOR_DEPTH == 32 ? 0: 64)
 
 /*Images pixels with this color will not be drawn if they are chroma keyed)*/
 #define LV_COLOR_CHROMA_KEY lv_color_hex(0x00ff00)         /*pure green*/
@@ -676,7 +675,7 @@ extern uint32_t custom_tick_get(void);
  ====================*/
 
 /*Show some widget. It might be required to increase `LV_MEM_SIZE` */
-#define LV_USE_DEMO_WIDGETS        1
+#define LV_USE_DEMO_WIDGETS        0
 #if LV_USE_DEMO_WIDGETS
 #define LV_DEMO_WIDGETS_SLIDESHOW  0
 #endif
@@ -685,7 +684,7 @@ extern uint32_t custom_tick_get(void);
 #define LV_USE_DEMO_KEYPAD_AND_ENCODER     0
 
 /*Benchmark your system*/
-#define LV_USE_DEMO_BENCHMARK   0
+#define LV_USE_DEMO_BENCHMARK   1
 
 /*Stress test for LVGL*/
 #define LV_USE_DEMO_STRESS      0

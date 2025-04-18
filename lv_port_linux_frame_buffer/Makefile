@@ -1,7 +1,7 @@
 #
 # Makefile
 #
-CC 				:= $(shell which riscv64-unknown-linux-musl-gcc)
+CC 				:= /home/rider/Repos/duo-buildroot-sdk-v2/host-tools/gcc/riscv64-linux-musl-x86_64/bin/riscv64-unknown-linux-musl-gcc
 LVGL_DIR_NAME 	?= lvgl
 LVGL_DIR 		?= .
 
@@ -12,7 +12,7 @@ WARNINGS		:= -Wall -Wshadow -Wundef -Wmissing-prototypes -Wno-discarded-qualifie
 					-Wno-unused-value -Wno-unused-parameter -Wno-missing-field-initializers -Wuninitialized -Wmaybe-uninitialized -Wall -Wextra -Wno-unused-parameter \
 					-Wno-missing-field-initializers -Wtype-limits -Wsizeof-pointer-memaccess -Wno-format-nonliteral -Wpointer-arith -Wno-cast-qual -Wmissing-prototypes \
 					-Wunreachable-code -Wno-switch-default -Wreturn-type -Wmultichar -Wno-discarded-qualifiers -Wformat-security -Wno-ignored-qualifiers -Wno-sign-compare -std=c99
-CFLAGS 			?= -O3 -g0 -mcpu=c906fdv -march=rv64imafdcv0p7xthead -mcmodel=medany -mabi=lp64d -Wall -Wshadow -I$(LVGL_DIR)/ $(WARNINGS)
+CFLAGS 			?= -O3 -g0 -march=rv64imafdcvxthead -mcpu=c906fdv -mcmodel=medany -mabi=lp64d -Wall -Wshadow -I$(LVGL_DIR)/ $(WARNINGS)
 LDFLAGS 		?= -lm
 BIN 			= demo
 BUILD_DIR 		= ./build
