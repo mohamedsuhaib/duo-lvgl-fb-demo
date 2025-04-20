@@ -17,40 +17,29 @@ int main(void)
     /*Linux frame buffer device init*/
     fbdev_init();
 
-    /*A small buffer for LittlevGL to draw the screen's content*/
-    static lv_color_t buf[DISP_BUF_SIZE];
+    /*Touch input device init*/
+    evdev_init();
 
-    /*Initialize a descriptor for the buffer*/
+    /*Drawing buffer*/
+    static lv_color_t buf[DISP_BUF_SIZE];
     static lv_disp_draw_buf_t disp_buf;
     lv_disp_draw_buf_init(&disp_buf, buf, NULL, DISP_BUF_SIZE);
 
-    /*Initialize and register a display driver*/
+    /*Display driver*/
     static lv_disp_drv_t disp_drv;
     lv_disp_drv_init(&disp_drv);
-    disp_drv.draw_buf   = &disp_buf;
-    disp_drv.flush_cb   = fbdev_flush;
-    disp_drv.hor_res    = 240;
-    disp_drv.ver_res    = 320;
+    disp_drv.draw_buf = &disp_buf;
+    disp_drv.flush_cb = fbdev_flush;
+    disp_drv.hor_res = 240;
+    disp_drv.ver_res = 320;
     lv_disp_drv_register(&disp_drv);
 
-#if 0
-    evdev_init();
-    static lv_indev_drv_t indev_drv_1;
-    lv_indev_drv_init(&indev_drv_1); /*Basic initialization*/
-    indev_drv_1.type = LV_INDEV_TYPE_POINTER;
-
-    /*This function will be called periodically (by the library) to get the mouse position and state*/
-    indev_drv_1.read_cb = evdev_read;
-    lv_indev_t *mouse_indev = lv_indev_drv_register(&indev_drv_1);
-
-
-    /*Set a cursor for the mouse*/
-    LV_IMG_DECLARE(mouse_cursor_icon)
-    lv_obj_t * cursor_obj = lv_img_create(lv_scr_act()); /*Create an image object for the cursor */
-    lv_img_set_src(cursor_obj, &mouse_cursor_icon);           /*Set the image source*/
-    lv_indev_set_cursor(mouse_indev, cursor_obj);             /*Connect the image  object to the driver*/
-#endif
-
+    /*Input device driver*/
+    static lv_indev_drv_t indev_drv;
+    lv_indev_drv_init(&indev_drv);
+    indev_drv.type = LV_INDEV_TYPE_POINTER;
+    indev_drv.read_cb = evdev_read;
+    lv_indev_drv_register(&indev_drv);
 
     /*Create a Demo*/
 #if LV_USE_DEMO_WIDGETS
@@ -60,7 +49,7 @@ int main(void)
     lv_demo_benchmark();
 #endif
 
-    /*Handle LitlevGL tasks (tickless mode)*/
+    /*Handle LVGL tasks*/
     while(1) {
         lv_timer_handler();
         usleep(5000);
@@ -69,7 +58,7 @@ int main(void)
     return 0;
 }
 
-/*Set in lv_conf.h as `LV_TICK_CUSTOM_SYS_TIME_EXPR`*/
+/*Custom system tick using gettimeofday()*/
 uint32_t custom_tick_get(void)
 {
     static uint64_t start_ms = 0;
@@ -84,6 +73,5 @@ uint32_t custom_tick_get(void)
     uint64_t now_ms;
     now_ms = (tv_now.tv_sec * 1000000 + tv_now.tv_usec) / 1000;
 
-    uint32_t time_ms = now_ms - start_ms;
-    return time_ms;
+    return (uint32_t)(now_ms - start_ms);
 }

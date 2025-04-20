@@ -108,7 +108,7 @@ bool evdev_set_file(char* dev_name)
 void evdev_read(lv_indev_drv_t * drv, lv_indev_data_t * data)
 {
     struct input_event in;
-
+    LV_LOG_USER("Input event triggered");
     while(read(evdev_fd, &in, sizeof(struct input_event)) > 0) {
         if(in.type == EV_REL) {
             if(in.code == REL_X)
@@ -217,7 +217,7 @@ void evdev_read(lv_indev_drv_t * drv, lv_indev_data_t * data)
     if(drv->type != LV_INDEV_TYPE_POINTER)
         return ;
     /*Store the collected data*/
-
+    LV_LOG_USER("Event Type - Pointer");
 #if EVDEV_CALIBRATE
     data->point.x = map(evdev_root_x, EVDEV_HOR_MIN, EVDEV_HOR_MAX, 0, drv->disp->driver->hor_res);
     data->point.y = map(evdev_root_y, EVDEV_VER_MIN, EVDEV_VER_MAX, 0, drv->disp->driver->ver_res);
@@ -228,6 +228,8 @@ void evdev_read(lv_indev_drv_t * drv, lv_indev_data_t * data)
 
     data->state = evdev_button;
 
+    LV_LOG_USER("State: %d", data->state);
+
     if(data->point.x < 0)
       data->point.x = 0;
     if(data->point.y < 0)
@@ -236,6 +238,9 @@ void evdev_read(lv_indev_drv_t * drv, lv_indev_data_t * data)
       data->point.x = drv->disp->driver->hor_res - 1;
     if(data->point.y >= drv->disp->driver->ver_res)
       data->point.y = drv->disp->driver->ver_res - 1;
+
+    LV_LOG_USER("Data Point X: %d", data->point.x);
+    LV_LOG_USER("Data Point Y: %d", data->point.y);
 
     return ;
 }
