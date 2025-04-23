@@ -449,6 +449,8 @@
 #if USE_EVDEV || USE_BSD_EVDEV
 #  define EVDEV_NAME   "/dev/input/event0"        /*You can use the "evtest" Linux tool to get the list of devices and test them*/
 #  define EVDEV_SWAP_AXES         0               /*Swap the x and y axes of the touchscreen*/
+#  define EVDEV_INVERT_X          1               /*Set to 1 to invert X axis*/
+#  define EVDEV_INVERT_Y          0               /*Set to 1 to invert Y axis*/
 
 #  define EVDEV_CALIBRATE         1               /*Scale and offset the touchscreen coordinates by using maximum and minimum values for each axis*/
 

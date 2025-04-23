@@ -218,13 +218,25 @@ void evdev_read(lv_indev_drv_t * drv, lv_indev_data_t * data)
         return ;
     /*Store the collected data*/
     LV_LOG_USER("Event Type - Pointer");
-#if EVDEV_CALIBRATE
-    data->point.x = map(evdev_root_x, EVDEV_HOR_MIN, EVDEV_HOR_MAX, 0, drv->disp->driver->hor_res);
-    data->point.y = map(evdev_root_y, EVDEV_VER_MIN, EVDEV_VER_MAX, 0, drv->disp->driver->ver_res);
-#else
-    data->point.x = evdev_root_x;
-    data->point.y = evdev_root_y;
-#endif
+    #if EVDEV_CALIBRATE
+        int px = map(evdev_root_x, EVDEV_HOR_MIN, EVDEV_HOR_MAX, 0, drv->disp->driver->hor_res);
+        int py = map(evdev_root_y, EVDEV_VER_MIN, EVDEV_VER_MAX, 0, drv->disp->driver->ver_res);
+    #else
+        int px = evdev_root_x;
+        int py = evdev_root_y;
+    #endif
+
+    #if EVDEV_INVERT_X
+        px = drv->disp->driver->hor_res - 1 - px;
+    #endif
+
+    #if EVDEV_INVERT_Y
+        py = drv->disp->driver->ver_res - 1 - py;
+    #endif
+
+    data->point.x = px;
+    data->point.y = py;
+
 
     data->state = evdev_button;
 
