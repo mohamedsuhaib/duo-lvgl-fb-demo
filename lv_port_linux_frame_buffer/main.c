@@ -7,7 +7,10 @@
 #include <time.h>
 #include <sys/time.h>
 
-#define DISP_BUF_SIZE (128 * 1024)
+#define DISP_HOR_RES 240
+#define DISP_VER_RES 320
+#define DISP_BUF_LINES 40
+#define DISP_BUF_SIZE (DISP_HOR_RES * DISP_BUF_LINES)
 
 int main(void)
 {
