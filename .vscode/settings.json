@@ -4,5 +4,10 @@
         "plaintext": false,
         "markdown": false,
         "scminput": false
+    },
+    "files.associations": {
+        "ui.h": "c",
+        "ui_helpers.h": "c",
+        "fbdev.h": "c"
     }
 }

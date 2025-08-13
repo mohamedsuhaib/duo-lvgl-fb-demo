@@ -6,10 +6,10 @@
 #include <pthread.h>
 #include <time.h>
 #include <sys/time.h>
-
+#include "ui/ui.h"
 #define DISP_HOR_RES 240
 #define DISP_VER_RES 320
-#define DISP_BUF_LINES 40
+#define DISP_BUF_LINES 80
 #define DISP_BUF_SIZE (DISP_HOR_RES * DISP_BUF_LINES)
 
 int main(void)
@@ -33,8 +33,8 @@ int main(void)
     lv_disp_drv_init(&disp_drv);
     disp_drv.draw_buf = &disp_buf;
     disp_drv.flush_cb = fbdev_flush;
-    disp_drv.hor_res = 240;
-    disp_drv.ver_res = 320;
+    disp_drv.hor_res = DISP_HOR_RES;
+    disp_drv.ver_res = DISP_VER_RES;
     lv_disp_drv_register(&disp_drv);
 
     /*Input device driver*/
@@ -44,6 +44,8 @@ int main(void)
     indev_drv.read_cb = evdev_read;
     lv_indev_drv_register(&indev_drv);
 
+
+    ui_init();
     /*Create a Demo*/
 #if LV_USE_DEMO_WIDGETS
     lv_demo_widgets();

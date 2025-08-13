@@ -30,6 +30,15 @@ include $(LVGL_DIR)/lv_drivers/lv_drivers.mk
 
 CSRCS 			+=$(LVGL_DIR)/mouse_cursor_icon.c 
 
+# Add SquareLine UI sources
+UI_DIR = ./ui
+CFLAGS += -I$(UI_DIR) -I$(UI_DIR)/components -I$(UI_DIR)/screens
+
+# Find all C files in ui/ folder (recursive)
+CSRCS += $(wildcard $(UI_DIR)/*.c) \
+         $(wildcard $(UI_DIR)/components/*.c) \
+         $(wildcard $(UI_DIR)/screens/*.c)
+
 OBJEXT 			?= .o
 
 AOBJS 			= $(ASRCS:.S=$(OBJEXT))
