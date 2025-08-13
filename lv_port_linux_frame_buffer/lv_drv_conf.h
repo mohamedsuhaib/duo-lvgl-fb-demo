@@ -302,7 +302,7 @@
  *  ILI9341 240X320 TFT LCD
  *------------------------------------------------*/
 #ifndef USE_ILI9341
-#  define USE_ILI9341       0
+#  define USE_ILI9341       1
 #endif
 
 #if USE_ILI9341
@@ -354,7 +354,7 @@
  *    XPT2046
  *--------------*/
 #ifndef USE_XPT2046
-#  define USE_XPT2046         0
+#  define USE_XPT2046         1
 #endif
 
 #if USE_XPT2046

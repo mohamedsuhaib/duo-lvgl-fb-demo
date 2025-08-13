@@ -34,7 +34,7 @@ extern "C" {
 #error "ILI9341 currently supports 'LV_COLOR_DEPTH == 16'. Set it in lv_conf.h"
 #endif
 
-#if LV_COLOR_16_SWAP != 1
+#if LV_COLOR_16_SWAP != 0
 #error "ILI9341 SPI requires LV_COLOR_16_SWAP == 1. Set it in lv_conf.h"
 #endif
 
